@@ -70,7 +70,12 @@ class SingleCharacterTextField: UITextField {
 				let index = newValue.index(after: newValue.startIndex)
 				singleCharacterDelegate?.didAddCharacterWithOverflow(self, character: newCharacter, overflowedString: String(newValue[index...]))
 			} else {
-				singleCharacterDelegate?.didBecomeEmpty(self, oldValue: String(characterValue.first!))
+				text = newValue
+				if let firstCharacter = characterValue.first {
+					singleCharacterDelegate?.didBecomeEmpty(self, oldValue: String(firstCharacter))
+				} else {
+					singleCharacterDelegate?.didBecomeEmpty(self, oldValue: "")
+				}
 			}
 			
 			characterValue = newValue
